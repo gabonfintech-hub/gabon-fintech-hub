@@ -10,6 +10,6 @@ export const contact = {
 
 export const social = [
   { name: 'LinkedIn', url: SITE_CONFIG.linkedInUrl, icon: 'linkedin' },
-  { name: 'Facebook', url: '/contact', icon: 'facebook' }, // À CONFIRMER : lien page Facebook officielle
-  { name: 'YouTube', url: '/contact', icon: 'youtube' }, // À CONFIRMER : lien chaîne YouTube officielle
+  { name: 'Facebook', url: 'https://www.facebook.com/share/19ycmQr9fP/?mibextid=wwXIfr', icon: 'facebook' },
+  { name: 'YouTube', url: 'https://youtube.com/@financialinclusiontv7635', icon: 'youtube' },
 ];
