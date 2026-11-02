@@ -43,6 +43,8 @@ function doPost(e) {
       targetSheetName = "Adhésion";
     } else if (formType === "evenements") {
       targetSheetName = "Événements";
+    } else if (formType === "invitation") {
+      targetSheetName = "Invitations";
     }
 
     var sheet = getOrCreateSheet(ss, targetSheetName);
@@ -112,6 +114,21 @@ function doPost(e) {
         data.subject || "Inscription",
         data.message || "",
         data.utmSource || "direct"
+      ];
+    } else if (targetSheetName === "Invitations") {
+      rowData = [
+        submittedAt,
+        dossierId,
+        data.name || "",
+        data.organization || "",
+        data.role || "",
+        data.profile || "",
+        data.email || "",
+        data.phone || "",
+        data.message || "",
+        data.utmSource || "direct",
+        "En attente",
+        ""
       ];
     } else if (targetSheetName === "Test") {
       rowData = [
@@ -214,6 +231,21 @@ function getOrCreateSheet(ss, sheetName) {
         "Message",
         "Source (UTM)"
       ];
+    } else if (sheetName === "Invitations") {
+      headers = [
+        "Date et Heure",
+        "N° Dossier",
+        "Nom complet",
+        "Organisation",
+        "Fonction",
+        "Profil",
+        "Email",
+        "Téléphone",
+        "Motivation",
+        "Source (UTM)",
+        "Statut",
+        "Notes internes"
+      ];
     } else if (sheetName === "Test") {
       headers = [
         "Date et Heure",
@@ -237,6 +269,21 @@ function getOrCreateSheet(ss, sheetName) {
     }
 
     sheet.appendRow(headers);
+
+    // Invitations : liste déroulante de statut colorée (Invité / En attente / Refusé)
+    if (sheetName === "Invitations") {
+      var statutRange = sheet.getRange(2, 11, 999, 1);
+      statutRange.setDataValidation(SpreadsheetApp.newDataValidation()
+        .requireValueInList(["En attente", "Invité", "Refusé"], true).build());
+      sheet.setConditionalFormatRules([
+        SpreadsheetApp.newConditionalFormatRule().whenTextEqualTo("Invité")
+          .setBackground("#d1fae5").setFontColor("#065f46").setRanges([statutRange]).build(),
+        SpreadsheetApp.newConditionalFormatRule().whenTextEqualTo("En attente")
+          .setBackground("#fef3c7").setFontColor("#92400e").setRanges([statutRange]).build(),
+        SpreadsheetApp.newConditionalFormatRule().whenTextEqualTo("Refusé")
+          .setBackground("#fee2e2").setFontColor("#991b1b").setRanges([statutRange]).build()
+      ]);
+    }
 
     // Style professionnel des en-têtes (Bleu nuit GFH, texte blanc gras)
     var headerRange = sheet.getRange(1, 1, 1, headers.length);

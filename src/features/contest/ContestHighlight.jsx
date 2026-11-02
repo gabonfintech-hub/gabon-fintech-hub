@@ -4,9 +4,11 @@ import { Icon } from '../../components/Icon';
 import { Eyebrow } from '../../components/Eyebrow';
 import { ScrollReveal } from '../../components/ScrollReveal';
 import { fadeUp, scaleIn } from '../../lib/animations';
+import { isInvitationPhase } from '../../config/eventPhase';
 
 export function ContestHighlight() {
   const shouldReduceMotion = useReducedMotion();
+  const invite = isInvitationPhase();
 
   return (
     <section
@@ -65,18 +67,21 @@ export function ContestHighlight() {
 
               {/* Informations génériques sans chiffres inventés */}
               <p className="mt-3 text-xs font-semibold tracking-wide text-blue-200/90">
-                5 décembre 2026 · Candidatures ouvertes jusqu'au 12 novembre 2026
+                {invite
+                  ? '5 décembre 2026 · Candidatures closes · Les 6 finalistes sont connus'
+                  : "5 décembre 2026 · Candidatures ouvertes jusqu'au 12 novembre 2026"}
               </p>
 
               {/* Bouton d'action avec libellé unique et cohérent */}
-              <div className="mt-8 flex flex-wrap items-center gap-4">
+              <div className={`mt-8 flex-wrap items-center gap-4 ${invite ? 'hidden' : 'flex'}`}>
                 <Button href="https://postuler.gabonfintech-hub.com" target="_blank" rel="noopener noreferrer" light className="font-bold shadow-lg">
                   Postuler <Icon name="spark" className="h-4 w-4" />
                 </Button>
               </div>
             </div>
 
-            {/* 3 piliers d'opportunité du concours (qualitatif, sans chiffres inventés) */}
+            {invite ? <ChoiceCards /> : (
+            /* 3 piliers d'opportunité du concours (qualitatif, sans chiffres inventés) */
             <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
               <motion.div
                 variants={fadeUp}
@@ -126,9 +131,39 @@ export function ContestHighlight() {
                 </p>
               </motion.div>
             </div>
+            )}
           </div>
         </ScrollReveal>
       </div>
     </section>
+  );
+}
+
+/* À partir du 13 novembre : deux parcours bien distincts pour éviter toute confusion */
+function ChoiceCards() {
+  return (
+    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+      <div className="rounded-2xl border border-white/10 bg-white/5 p-5 opacity-80">
+        <div className="flex items-center justify-between gap-3">
+          <h3 className="font-display text-base font-bold text-white">Je représente une fintech</h3>
+          <span className="rounded-full bg-white/10 px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-white/70">CLÔTURÉ</span>
+        </div>
+        <p className="mt-2 text-xs leading-5 text-white/70">
+          Les candidatures ont pris fin le 12 novembre 2026. Les six finalistes ont été contactés par l'équipe du Hub.
+        </p>
+      </div>
+      <div className="rounded-2xl border border-blue-300/50 bg-blue-300/10 p-5 shadow-[0_0_30px_rgba(56,189,248,0.15)]">
+        <div className="flex items-center justify-between gap-3">
+          <h3 className="font-display text-base font-bold text-white">Je souhaite assister à la finale</h3>
+          <span className="rounded-full bg-emerald-400/20 px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-emerald-200">OUVERT</span>
+        </div>
+        <p className="mt-2 text-xs leading-5 text-white/80">
+          Partenaires, investisseurs, institutions, médias : demandez votre invitation. Places limitées, lieu communiqué avec l'invitation.
+        </p>
+        <Button to="/invitation" light className="mt-4 font-bold">
+          Demander une invitation <Icon className="h-4 w-4" />
+        </Button>
+      </div>
+    </div>
   );
 }

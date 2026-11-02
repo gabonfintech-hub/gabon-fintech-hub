@@ -5,9 +5,11 @@ import { Button } from '../../components/Button';
 import { Eyebrow } from '../../components/Eyebrow';
 import { ScrollReveal } from '../../components/ScrollReveal';
 import { Link } from 'react-router-dom';
+import { isInvitationPhase } from '../../config/eventPhase';
 
 export function Events() {
   const shouldReduceMotion = useReducedMotion();
+  const invite = isInvitationPhase();
 
   // Agenda : événement GFH et rendez-vous FinTech partenaires
   const upcomingEvents = [
@@ -16,8 +18,8 @@ export function Events() {
       category: 'Organisé par le GFH · 1re édition',
       when: '5 décembre 2026 · Gabon',
       description: 'Événement privé : six fintechs gabonaises finalistes devant un jury d’experts, pour représenter le Gabon au CAFS 2027.',
-      href: 'https://postuler.gabonfintech-hub.com',
-      cta: 'Postuler avant le 12 novembre',
+      href: invite ? '/invitation' : 'https://postuler.gabonfintech-hub.com',
+      cta: invite ? 'Demander une invitation' : 'Postuler avant le 12 novembre',
     },
     {
       title: 'Canada Africa FinTech Summit 2027',
@@ -158,8 +160,7 @@ export function Events() {
               </span>
               <a
                 href={evt.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                {...(evt.href.startsWith('/') ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
                 className="group mt-3 flex items-center gap-1.5 text-xs font-bold text-blue-800 transition hover:text-blue-900"
               >
                 <span>{evt.cta}</span>

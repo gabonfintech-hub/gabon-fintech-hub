@@ -65,6 +65,7 @@ function generateDossierId(formType) {
     startups: 'STP',
     contact: 'CTC',
     evenements: 'EVT',
+    invitation: 'INV',
   };
   const prefix = prefixes[formType] || 'GFH';
   const randomSuffix = Math.random().toString(36).substring(2, 8).toUpperCase();

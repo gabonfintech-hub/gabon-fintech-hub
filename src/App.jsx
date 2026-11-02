@@ -14,6 +14,7 @@ import { ContactPage } from './pages/ContactPage';
 import { StartupRegistrationPage } from './pages/StartupRegistrationPage';
 import { ContestPage } from './pages/ContestPage';
 import { NotFoundPage } from './pages/NotFoundPage';
+import { InvitationPage } from './pages/InvitationPage';
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
             <Route path="/adhesion" element={<MembershipPage />} />
             <Route path="/inscription-startups" element={<StartupRegistrationPage />} />
             <Route path="/concours" element={<ContestPage />} />
+            <Route path="/invitation" element={<InvitationPage />} />
             <Route path="/communautes" element={<CommunityPage />} />
             <Route path="/evenements" element={<EventsPage />} />
             <Route path="/ressources" element={<ResourcesPage />} />

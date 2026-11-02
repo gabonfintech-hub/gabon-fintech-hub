@@ -32,6 +32,8 @@ function getEmailSubject(formType, dossierId, isTest, data) {
       return `${prefix} Demande d’Adhésion [${(data.category || 'Membre').toUpperCase()}] : ${name} (${dossierId})`;
     case 'startups':
       return `${prefix} Candidature Startup : ${data.startupName || name} (${dossierId})`;
+    case 'invitation':
+      return `${prefix} Demande d'invitation (finale 5 déc.) : ${name} (${dossierId})`;
     case 'evenements':
       return `${prefix} Inscription Événement : ${name} (${dossierId})`;
     case 'contact':
@@ -49,6 +51,7 @@ function buildEmailHtml(formType, dossierId, data, submittedAtFormatted, isTest,
     adhesion: 'Demande Officielle d’Adhésion',
     startups: 'Candidature Accompagnement Startup',
     evenements: 'Inscription / Demande Événement',
+    invitation: 'Demande d’invitation · Elite FinTech Competition',
     contact: 'Formulaire de Contact Direct',
   };
 
@@ -75,6 +78,8 @@ function buildEmailHtml(formType, dossierId, data, submittedAtFormatted, isTest,
         message: 'Message transmis',
         subject: 'Sujet / Thématique',
         eventName: 'Événement concerné',
+        role: 'Fonction',
+        profile: 'Profil',
         sector: 'Verticale métier',
         stage: 'Stade d’avancement',
         mainNeed: 'Besoin prioritaire',

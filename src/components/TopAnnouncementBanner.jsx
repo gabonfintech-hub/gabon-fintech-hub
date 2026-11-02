@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Icon } from './Icon';
+import { isInvitationPhase } from '../config/eventPhase';
 
 const STORAGE_KEY = 'gfh_contest_banner_dismissed';
 
 export function TopAnnouncementBanner() {
   const [visible, setVisible] = useState(false);
   const shouldReduceMotion = useReducedMotion();
+  const invite = isInvitationPhase();
 
   useEffect(() => {
     try {
@@ -52,16 +54,16 @@ export function TopAnnouncementBanner() {
               <span className="hidden text-white/30 sm:inline" aria-hidden="true">·</span>
 
               <span className="rounded-full bg-amber-400/15 px-2 py-0.5 text-[11px] font-semibold text-amber-200">
-                1re édition · Sur invitation
+                {invite ? 'Finale · 5 décembre 2026' : '1re édition · Sur invitation'}
               </span>
 
               <span className="hidden text-white/30 md:inline" aria-hidden="true">·</span>
 
               <Link
-                to="/concours"
+                to={invite ? '/invitation' : '/concours'}
                 className="group inline-flex items-center gap-1 font-bold text-white underline decoration-blue-400 underline-offset-4 transition hover:text-blue-200 hover:decoration-white"
               >
-                <span>Participer au concours</span>
+                <span>{invite ? 'Demander une invitation' : 'Participer au concours'}</span>
                 <Icon
                   name="arrow"
                   className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-0.5"

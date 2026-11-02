@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Icon, cx } from './Icon';
 import { Button } from './Button';
+import { isInvitationPhase } from '../config/eventPhase';
 
 export function Header() {
+  const invite = isInvitationPhase();
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
@@ -97,7 +99,7 @@ export function Header() {
           {/* Point d'entrée Concours dans le menu mobile */}
           <div className="mt-4 flex flex-col gap-3 border-t border-navy-900/10 pt-4 lg:hidden">
             <Link
-              to="/concours"
+              to={invite ? '/invitation' : '/concours'}
               onClick={() => setOpen(false)}
               className="flex min-h-12 items-center justify-between rounded-2xl bg-blue-700 px-4 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-blue-800"
             >
@@ -105,7 +107,7 @@ export function Header() {
                 <span className="grid h-7 w-7 place-items-center rounded-lg bg-blue-800/80 text-blue-200">
                   <Icon name="spark" className="h-4 w-4" ariaHidden={true} />
                 </span>
-                <span>Participer au concours</span>
+                <span>{invite ? 'Assister à la finale' : 'Participer au concours'}</span>
               </div>
               <span className="rounded-full bg-amber-400/20 px-2.5 py-0.5 text-[10px] font-bold text-amber-200">
                 Sur invitation
@@ -127,7 +129,7 @@ export function Header() {
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Bouton d'action CONCOURS : distinct, couleur d'accent bleue, lisible sur tous les fonds */}
           <Link
-            to="/concours"
+            to={invite ? '/invitation' : '/concours'}
             onClick={() => setOpen(false)}
             className={cx(
               'inline-flex min-h-9 sm:min-h-10 items-center gap-1.5 sm:gap-2 rounded-full px-3 sm:px-4 text-[11px] sm:text-xs md:text-sm font-bold shadow-sm transition-all duration-200 whitespace-nowrap select-none hover:-translate-y-0.5',
@@ -135,9 +137,9 @@ export function Header() {
                 ? 'bg-blue-700 text-white hover:bg-blue-800 hover:shadow-md ring-1 ring-blue-600/30'
                 : 'bg-blue-300 text-navy-950 hover:bg-blue-200 hover:shadow-[0_0_15px_rgba(56,189,248,0.45)] ring-1 ring-blue-200/50'
             )}
-            title="Elite FinTech Competition · 1re édition · Sur invitation"
+            title={invite ? 'Finale du 5 décembre 2026 · Demander une invitation' : 'Elite FinTech Competition · 1re édition · Sur invitation'}
           >
-            <span>Participer au concours</span>
+            <span>{invite ? 'Assister à la finale' : 'Participer au concours'}</span>
             <Icon name="spark" className="h-3.5 w-3.5 shrink-0" ariaHidden={true} />
           </Link>
 

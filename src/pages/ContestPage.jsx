@@ -7,10 +7,12 @@ import { concoursData } from '../data';
 import { ContestCirclesIllustration } from '../features/contest/ContestCirclesIllustration';
 import { ContestInBrief } from '../features/contest/ContestInBrief';
 import { ContestFaq } from '../features/contest/ContestFaq';
+import { isInvitationPhase } from '../config/eventPhase';
 
 export function ContestPage() {
   // Les candidatures passent par le formulaire officiel (lien des flyers / QR codes)
   const APPLICATION_URL = 'https://postuler.gabonfintech-hub.com';
+  const invite = isInvitationPhase();
 
   return (
     <>
@@ -56,9 +58,15 @@ export function ContestPage() {
 
             {/* Bouton d'ancrage vers le formulaire */}
             <div className="mt-8 flex flex-wrap items-center gap-4">
-              <Button href={APPLICATION_URL} target="_blank" rel="noopener noreferrer" light>
-                S'inscrire au concours <Icon className="h-4 w-4" />
-              </Button>
+              {invite ? (
+                <Button to="/invitation" light>
+                  Demander une invitation <Icon className="h-4 w-4" />
+                </Button>
+              ) : (
+                <Button href={APPLICATION_URL} target="_blank" rel="noopener noreferrer" light>
+                  S'inscrire au concours <Icon className="h-4 w-4" />
+                </Button>
+              )}
               <a
                 href="#en-bref"
                 className="inline-flex items-center gap-1.5 text-xs font-medium text-white/80 transition hover:text-white hover:underline"
@@ -79,15 +87,23 @@ export function ContestPage() {
         <div className="mx-auto max-w-3xl px-5 text-center lg:px-8">
           <ScrollReveal>
             <h2 className="font-display text-3xl font-semibold tracking-[-.04em] sm:text-4xl">
-              Prêt à représenter le Gabon ?
+              {invite ? 'Assistez à la finale' : 'Prêt à représenter le Gabon ?'}
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-ivory-100/90">
-              Les candidatures se font via notre formulaire officiel. Date limite : 12 novembre 2026.
+              {invite
+                ? 'Les candidatures sont closes et les six finalistes sont connus. La finale du 5 décembre 2026 est privée : demandez votre invitation.'
+                : 'Les candidatures se font via notre formulaire officiel. Date limite : 12 novembre 2026.'}
             </p>
             <div className="mt-8 flex justify-center">
-              <Button href={APPLICATION_URL} target="_blank" rel="noopener noreferrer" light>
-                Postuler maintenant <Icon className="h-4 w-4" />
-              </Button>
+              {invite ? (
+                <Button to="/invitation" light>
+                  Demander une invitation <Icon className="h-4 w-4" />
+                </Button>
+              ) : (
+                <Button href={APPLICATION_URL} target="_blank" rel="noopener noreferrer" light>
+                  Postuler maintenant <Icon className="h-4 w-4" />
+                </Button>
+              )}
             </div>
           </ScrollReveal>
         </div>
