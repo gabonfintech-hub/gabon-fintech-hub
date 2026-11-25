@@ -36,7 +36,7 @@ export function Community() {
   return (
     <section id="communautes" className="relative isolate overflow-hidden bg-navy-800 py-16 text-white lg:py-24">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <div className="grid items-center gap-10 lg:grid-cols-[1fr_440px]">
+        <div className="grid items-center gap-10 lg:grid-cols-[1fr_540px]">
           <ScrollReveal className="max-w-2xl">
             <Eyebrow light>ÉCOSYSTÈME & COMMUNAUTÉ</Eyebrow>
             <h2 className="font-display text-4xl font-semibold leading-[1.04] tracking-[-.06em] md:text-5xl">
@@ -97,7 +97,7 @@ export function Community() {
                   <div
                     key={m.name}
                     className="absolute -translate-x-1/2 -translate-y-1/2"
-                    style={{ left: `${50 + 41 * Math.cos(angle)}%`, top: `${50 + 41 * Math.sin(angle)}%` }}
+                    style={{ left: `${50 + 44 * Math.cos(angle)}%`, top: `${50 + 44 * Math.sin(angle)}%` }}
                   >
                     <motion.div
                       animate={shouldReduceMotion ? { rotate: 0 } : { rotate: -360 }}
@@ -177,12 +177,12 @@ export function Community() {
 function MemberBadge({ member }) {
   const badge = (
     <span
-      className={`grid h-14 w-[124px] place-items-center rounded-full px-4 shadow-lg ring-1 transition ${
+      className={`grid h-[52px] w-[116px] place-items-center rounded-full px-3 shadow-lg ring-1 transition ${
         member.dark ? 'bg-navy-950 ring-white/20' : 'bg-white ring-white/40'
       }`}
       title={member.name}
     >
-      <img src={member.logo} alt={member.name} className="max-h-9 max-w-full object-contain" loading="lazy" />
+      <img src={member.logo} alt={member.name} className="max-h-8 max-w-full object-contain" loading="lazy" />
     </span>
   );
   return member.url ? (
