@@ -19,9 +19,10 @@ export function Hero() {
   const sectors = [
     'PayTech', 'InsurTech', 'RegTech', 'Cybersécurité', 'Néobanques', 'LendTech',
     'WealthTech', 'AgriTech', 'ID numérique', 'Data & Analytics', 'Blockchain', 'Crypto',
+    'Asset Tokenization',
   ];
   const sectorPositions = sectors.map((label, i) => {
-    const angle = ((i * 30 - 90) * Math.PI) / 180;
+    const angle = (((i * 360) / sectors.length - 90) * Math.PI) / 180;
     return {
       label,
       left: `${50 + 41 * Math.cos(angle)}%`,
