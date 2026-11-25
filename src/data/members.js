@@ -10,4 +10,9 @@ export const members = [
   { name: 'Financial Inclusion', logo: '/assets/member-financial-inclusion.png', url: 'https://www.youtube.com/@financialinclusiontv7635/videos' },
   { name: 'Capay', logo: '/assets/member-capay.png' },
   { name: 'Ebibie — Stratégie et Innovation', logo: '/assets/member-ebibie.png' },
+  { name: 'PVit (BakoAI)', logo: '/assets/member-pvit.png' },
+  { name: 'Akiba', logo: '/assets/member-akiba.png', url: 'https://akiba-pro.com' },
+  { name: 'KundaPay', logo: '/assets/member-kundapay.png' },
+  { name: 'Kame Group', logo: '/assets/member-kame-group.png' },
+  { name: 'BRNL Group', logo: '/assets/member-brnl-group.png' },
 ];
